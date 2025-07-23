@@ -18,11 +18,12 @@
   <!-- Login Box Container -->
   <div class="login-box bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-sm border border-gray-700">
     <h2 class="text-3xl font-bold text-center mb-6 text-white">Login</h2>
-    <form class="space-y-4">
+    <form class="space-y-4" method="post" action="submit">
       <!-- Username Input -->
       <input
         type="text"
         placeholder="Username"
+        name="Username"
         required
         class="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
       >
@@ -30,6 +31,7 @@
       <input
         type="password"
         placeholder="Password"
+        name="password"
         required
         class="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
       >
