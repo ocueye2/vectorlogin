@@ -1,9 +1,10 @@
 from submod.fr import checkuser
 import os
+import time
 os.chdir("/home/ocueye/Documents/workspace/docker/vector/vectorlogin")
 from flask import Flask, render_template, request
 
-app = Flask(__name__)
+app = Flask(__name__,"/static","static")
 
 @app.route("/")
 def hello_world():
@@ -13,7 +14,9 @@ def hello_world():
 def vcheck():
     if checkuser():
         os.system("killall surf")
-        os.system("hyprland")
+        os.system("hyprland &")
+        time.sleep(1)
+        exit()
         return render_template("suc.html")
     else:
         return render_template("fail.html")
@@ -30,4 +33,4 @@ def submit():
         return render_template("fail.html")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True,port=8060)
