@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <!-- Tailwind CSS CDN for easy styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom font for a modern look */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      /* Background for the entire page, mimicking the dark, futuristic theme */
+      background-color: #1a202c; /* Dark charcoal */
+      display: flex;
+      justify-content: flex-start; /* Align content to the left */
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden; /* Hide scrollbars if content overflows */
+      position: relative; /* For absolute positioning of clock */
+      padding-left: 5%; /* Add some padding to the left for the login box */
+    }
+
+    /* Custom styles to simulate the pixel art glow and overall aesthetic */
+    .login-container {
+      position: relative;
+      background: rgba(0, 0, 0, 0.4); /* Semi-transparent dark background for the form area */
+      backdrop-filter: blur(5px); /* Subtle blur for depth */
+      border-radius: 1rem; /* Rounded corners */
+      padding: 2.5rem; /* Increased padding */
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.3), /* Cyan glow */
+                  0 0 20px rgba(0, 255, 255, 0.2); /* Softer inner glow */
+      border: 1px solid rgba(0, 255, 255, 0.4); /* Light cyan border */
+      max-width: 28rem; /* Slightly wider form */
+      width: 90%; /* Responsive width */
+      z-index: 10; /* Ensure it's above background elements */
+      display: flex; /* Use flexbox for internal layout */
+      flex-direction: column; /* Stack children vertically */
+      align-items: flex-start; /* Align items to the start (left) */
+      gap: 1.5rem; /* Space between elements */
+    }
+
+    .login-box {
+      width: 100%; /* Ensure the inner box takes full width */
+    }
+
+    .login-box h2 {
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* Glow for the title */
+      margin-bottom: 1.5rem; /* Adjust margin for spacing */
+    }
+
+    .input-field {
+      background-color: rgba(0, 0, 0, 0.6); /* Darker, more transparent input background */
+      color: #e0f2f7; /* Light blue text */
+      border: 1px solid rgba(0, 255, 255, 0.3); /* Subtle cyan border */
+      box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.1); /* Inner glow effect */
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: #00e5ff; /* Brighter cyan on focus */
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.6), inset 0 0 8px rgba(0, 255, 255, 0.3); /* Stronger glow on focus */
+    }
+
+    .login-button {
+      background-color: #00e5ff; /* Bright cyan button */
+      color: #1a202c; /* Dark text on button */
+      font-weight: 700; /* Bold font */
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.6); /* Strong glow for button */
+      transition: all 0.3s ease;
+    }
+
+    .login-button:hover {
+      background-color: #00c4e0; /* Slightly darker cyan on hover */
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.8); /* Enhanced glow on hover */
+      transform: translateY(-2px); /* Slight lift effect */
+    }
+
+    .vector-button {
+      background-color: #4a90e2; /* Blue color for Vector button */
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.6); /* Blue glow */
+      transition: all 0.3s ease;
+    }
+
+    .vector-button:hover {
+      background-color: #357ABD; /* Darker blue on hover */
+      box-shadow: 0 0 30px rgba(74, 144, 226, 0.8); /* Enhanced blue glow */
+      transform: translateY(-2px);
+    }
+
+    /* Clock and Date styling - now relative to the login-container */
+    .time-display {
+      color: #e0f2f7; /* Light blue text */
+      font-size: 3rem; /* Adjusted font size to fit inside */
+      font-weight: 700;
+      text-shadow: 0 0 15px rgba(0, 255, 255, 0.8); /* Stronger glow */
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -1px; /* Slightly tighter spacing */
+      line-height: 1;
+      width: 100%; /* Ensure it takes full width */
+      text-align: center; /* Align to the center */
+      margin-bottom: 0.5rem; /* Space below time */
+    }
+
+    .date-display {
+      color: #a7d9e0; /* Slightly muted blue for date */
+      font-size: 1.2rem; /* Adjusted font size */
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+      width: 100%; /* Ensure it takes full width */
+      text-align: center; /* Align to the center */
+      margin-bottom: 1.5rem; /* Space below date and before title */
+    }
+
+    /* Placeholder for the pixel art background character/elements */
+    .pixel-art-elements {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%; /* Adjust as needed */
+        height: 100%; /* Adjust as needed */
+        background-image: url('/static/test.gif'); /* Placeholder image */
+        background-size: cover;
+        background-position: center bottom;
+        opacity: 0.3; /* Subtle background */
+        z-index: 1; /* Behind the login form */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding-left: 2%; /* Reduce padding on smaller screens */
+      }
+      .login-container {
+        padding: 2rem;
+      }
+      .time-display {
+        font-size: 2.5rem;
+      }
+      .date-display {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding-left: 0; /* Remove padding on very small screens */
+        justify-content: center; /* Center on very small screens for better readability */
+      }
+      .login-container {
+        padding: 1.5rem;
+        width: 95%; /* Make it wider on very small screens */
+      }
+      .time-display {
+        font-size: 2rem;
+      }
+      .date-display {
+        font-size: 0.9rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Pixel art background elements (placeholder for actual pixel art image) -->
+  <!-- In a real scenario, you would replace this with a detailed pixel art background image -->
+  <div class="pixel-art-elements"></div>
+
+  <div class="login-container">
+    <!-- Time and Date Display - now inside the login-container -->
+    <div class="time-display" id="timeDisplay"></div>
+    <div class="date-display" id="dateDisplay"></div>
+
+    <div class="login-box">
+      <h2 class="text-3xl font-bold text-center text-white">Login</h2>
+      <form class="space-y-6 mt-6" method="post" action="submit">
+        <!-- Username Input -->
+        <input type="text" placeholder="Username" name="Username" required=""
+               class="input-field w-full p-3 rounded-lg placeholder-gray-400">
+        <!-- Password Input -->
+        <input type="password" placeholder="Password" name="password" required=""
+               class="input-field w-full p-3 rounded-lg placeholder-gray-400">
+        <!-- Login Button -->
+        <button type="submit" class="login-button w-full p-3 rounded-lg">
+          Login
+        </button>
+      </form>
+      <!-- Separator or "or" text -->
+      <div class="text-center text-gray-400 my-6 text-shadow-sm" style="text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);">
+        Or
+      </div>
+      <!-- Login with Vector Button -->
+      <a href="vector" class="w-full block text-center p-3 rounded-lg vector-button">
+        Login with Vector
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript to update the time and date dynamically
+    function updateDateTime() {
+      const now = new Date();
+      const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+      const dateOptions = { weekday: 'long', day: 'numeric' };
+
+      const timeString = now.toLocaleTimeString('en-US', timeOptions);
+      const dateString = now.toLocaleDateString('en-US', dateOptions);
+
+      document.getElementById('timeDisplay').textContent = timeString;
+      document.getElementById('dateDisplay').textContent = dateString;
+    }
+
+    // Update immediately and then every second
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+  </script>
+</body>
+</html>
